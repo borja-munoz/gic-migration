@@ -5,12 +5,18 @@ import DefaultView from 'components/common/DefaultView';
 const Main = lazy(() => import(/* webpackPrefetch: true */ 'components/views/main/Main'));
 const NotFound = lazy(() => import('components/views/NotFound'));
 const Login = lazy(() => import('components/views/Login'));
+const Boundaries = lazy(() => import('components/views/Boundaries.js'));
+const BoundariesCartoLayer = lazy(() =>
+  import('components/views/BoundariesCartoLayer.js')
+);
 // [hygen] Import views
 
 export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
+  BOUNDARIES: '/boundaries',
+  BOUNDARIES_CARTO_LAYER: '/boundariesCartoLayer',
   // [hygen] Add path routes
 };
 
@@ -26,6 +32,8 @@ const routes = [
     ),
     children: [
       // { path: '/', element: <Navigate to='/<your default view>' /> },
+      { path: ROUTE_PATHS.BOUNDARIES, element: <Boundaries /> },
+      { path: ROUTE_PATHS.BOUNDARIES_CARTO_LAYER, element: <BoundariesCartoLayer /> },
       // [hygen] Add routes
     ],
   },

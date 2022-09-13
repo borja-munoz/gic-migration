@@ -206,6 +206,20 @@ function NavigationMenu({ column: vertical }) {
       >
         <Tab label='Home' value='' component={NavLink} to={ROUTE_PATHS.DEFAULT} />
         {/* [hygen] Import links */}
+        <Tab
+          label='Boundaries'
+          value='boundaries'
+          component={NavLink}
+          to={ROUTE_PATHS.BOUNDARIES}
+          className={classes.navLink}
+        />
+        <Tab
+          label='Boundaries carto layer'
+          value='boundariesCartoLayer'
+          component={NavLink}
+          to={ROUTE_PATHS.BOUNDARIES_CARTO_LAYER}
+          className={classes.navLink}
+        />
       </Tabs>
     </Grid>
   );

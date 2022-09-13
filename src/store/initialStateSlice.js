@@ -3,9 +3,9 @@ import { API_VERSIONS } from '@deck.gl/carto';
 
 export const initialState = {
   viewState: {
-    latitude: 31.802892,
-    longitude: -103.007813,
-    zoom: 2,
+    latitude: 41.75,
+    longitude: -88,
+    zoom: 7.5,
     pitch: 0,
     bearing: 0,
     dragRotate: false,
@@ -19,7 +19,7 @@ export const initialState = {
   googleMapId: '', // only required when using a Google Custom Basemap
   oauth: {
     domain: 'auth.carto.com',
-    clientId: '', // type here your application clientId
+    clientId: 'rKLiuPwpyi4zKHpTGmDOWo4Tsv8t9nzR', // type here your application clientId
     organizationId: '', // organizationId is required for SSO
     scopes: [
       'read:current_user',

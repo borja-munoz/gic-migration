@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MapContainer() {
   const isGmaps = useSelector((state) => BASEMAPS[state.carto.basemap].type === 'gmaps');
+  const isLoading = useSelector((state) => state.app.layerIsLoadingData);
   const classes = useStyles();
 
   const layers = getLayers();
@@ -64,7 +65,11 @@ export default function MapContainer() {
     <Grid item className={`${classes.mapWrapper} ${isGmaps ? classes.gmaps : ''}`}>
       <Map layers={layers} />
       <Hidden xsDown>
-        <ZoomControl className={classes.zoomControl} showCurrentZoom />
+        <ZoomControl
+          className={classes.zoomControl}
+          showCurrentZoom
+          isLoading={isLoading}
+        />
       </Hidden>
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
     </Grid>

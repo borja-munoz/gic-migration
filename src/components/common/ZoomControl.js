@@ -2,10 +2,12 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
+  CircularProgress,
   Divider,
   Grid,
   IconButton,
   makeStyles,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
@@ -17,12 +19,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     width: 'auto',
   },
+  loading: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 const MINIMUN_ZOOM_LEVEL = 0;
 const MAXIMUM_ZOOM_LEVEL = 20;
 
-export default function ZoomControl({ className, showCurrentZoom }) {
+export default function ZoomControl({ className, showCurrentZoom, isLoading = false }) {
   const dispatch = useDispatch();
   const zoomLevel = useSelector((state) => Math.floor(state.carto.viewState.zoom));
   const classes = useStyles();
@@ -52,6 +62,13 @@ export default function ZoomControl({ className, showCurrentZoom }) {
         <RemoveOutlinedIcon />
       </IconButton>
       <Divider orientation='vertical' flexItem />
+      {isLoading && (
+        <div className={classes.loading}>
+          <Tooltip title='Loading...' arrow placement='right'>
+            <CircularProgress color='primary' size={28} />
+          </Tooltip>
+        </div>
+      )}
       {showCurrentZoom && (
         <Box px={1} minWidth={36}>
           <Typography
