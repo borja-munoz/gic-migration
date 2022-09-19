@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useEffect } from 'react';
 import PolygonLabelLayer from './PolygonLabelLayer.js';
+import { WebMercatorViewport } from 'deck.gl';
 import { fetchLayerData } from '@deck.gl/carto';
 import { selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
@@ -12,12 +13,14 @@ export const BOUNDARIES_LAYER_ID = 'boundariesLayer';
 export default function BoundariesLayer() {
   const { boundariesLayer } = useSelector((state) => state.carto.layers);
   const source = useSelector((state) => selectSourceById(state, boundariesLayer?.source));
+  const viewState = useSelector((state) => state.carto.viewState);
   const cartoLayerProps = useCartoLayerProps({ source, uniqueIdProperty: 'cartodb_id' });
   const dispatch = useDispatch();
 
   let layer;
 
   const calculateLabelLocations = (features) => {
+    const viewport = new WebMercatorViewport(viewState);
     features.forEach((feature) => {
       let longestEdgeLength = 0;
       let longestEdgeInitialCoordIndex = 0;
@@ -35,6 +38,21 @@ export default function BoundariesLayer() {
         }
       }
       feature.properties['text'] = feature.properties['provider_short_name'];
+
+      // Calculate length in pixels
+      const startVertexPixels = viewport.project([
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0],  
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1]  
+      ]);
+      const endVertexPixels = viewport.project([
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0],  
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1]  
+      ]);
+      const dxPixels = endVertexPixels[0] - startVertexPixels[0];
+      const dyPixels = endVertexPixels[1] - startVertexPixels[1];
+      const lengthPixels = Math.sqrt(Math.pow(dxPixels, 2) + Math.pow(dyPixels, 2));
+
+      // Label in the midpoint
       const sumX =
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0] +
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0];
@@ -43,6 +61,8 @@ export default function BoundariesLayer() {
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1];
       const midPoint = [sumX / 2, sumY / 2];
       feature.properties['textPosition'] = midPoint;
+
+      // Angle of inclination (X axis)
       const dx =
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0] -
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0];
