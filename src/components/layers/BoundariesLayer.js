@@ -7,6 +7,7 @@ import { selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import htmlForFeature from 'utils/htmlForFeature';
 import { setLayerIsLoadingData } from 'store/appSlice';
+import simplify from '@turf/simplify';
 
 export const BOUNDARIES_LAYER_ID = 'boundariesLayer';
 
@@ -21,7 +22,8 @@ export default function BoundariesLayer() {
 
   const calculateLabelLocations = (features) => {
     const viewport = new WebMercatorViewport(viewState);
-    features.forEach((feature) => {
+    features.forEach((originalFeature) => {
+      const feature = simplify(originalFeature, { tolerance: 0.01 });
       let longestEdgeLength = 0;
       let longestEdgeInitialCoordIndex = 0;
       for (let i = 0; i < feature.geometry.coordinates[0].length - 1; i++) {
@@ -37,7 +39,7 @@ export default function BoundariesLayer() {
           longestEdgeInitialCoordIndex = i;
         }
       }
-      feature.properties['text'] = feature.properties['provider_short_name'];
+      originalFeature.properties['text'] = feature.properties['provider_short_name'];
 
       // Calculate length in pixels
       const startVertexPixels = viewport.project([
@@ -60,17 +62,17 @@ export default function BoundariesLayer() {
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1] +
         feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1];
       const midPoint = [sumX / 2, sumY / 2];
-      feature.properties['textPosition'] = midPoint;
+      originalFeature.properties['textPosition'] = midPoint;
 
       // Angle of inclination (X axis)
       const dx =
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0] -
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0];
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0] -
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0];
       const dy =
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1] -
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1];
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1] -
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1];
       const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-      feature.properties['angle'] = angle;
+      originalFeature.properties['angle'] = angle;
     });
   };
 
