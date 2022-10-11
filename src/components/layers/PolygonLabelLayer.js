@@ -6,7 +6,6 @@ export default class PolygonLabelLayer extends CompositeLayer {
       // Polygons
       new GeoJsonLayer(
         this.getSubLayerProps({
-          // `getSubLayerProps` will concat the parent layer id with this id
           id: 'polygon',
           data: this.props.data,
 
@@ -14,6 +13,15 @@ export default class PolygonLabelLayer extends CompositeLayer {
           getLineColor: this.props.getLineColor,
           lineWidthMinPixels: this.props.lineWidthMinPixels,
 
+          fillPatternMask: this.props.fillPatternMask,
+          fillPatternAtlas: this.props.fillPatternAtlas,
+          fillPatternMapping: this.props.fillPatternMapping,
+          getFillPattern: this.props.getFillPattern,
+          getFillPatternScale: this.props.getFillPatternScale,
+          getFillPatternOffset: this.props.getFillPatternOffset,
+
+          extensions: this.props.extensions,
+    
           updateTriggers: {
             getFillColor: this.props.updateTriggers.getFillColor,
             getLineColor: this.props.updateTriggers.getLineColor,
@@ -24,7 +32,6 @@ export default class PolygonLabelLayer extends CompositeLayer {
       // Labels
       new TextLayer(
         this.getSubLayerProps({
-          // `getSubLayerProps` will concat the parent layer id with this id
           id: 'text',
           data: this.props.data.features,
 
@@ -44,6 +51,8 @@ export default class PolygonLabelLayer extends CompositeLayer {
             getColor: this.props.updateTriggers.getTextColor,
             getAngle: this.props.updateTriggers.getTextAngle,
           },
+
+          extensions: []
         })
       ),
     ];

@@ -8,6 +8,9 @@ import { useCartoLayerProps } from '@carto/react-api';
 import htmlForFeature from 'utils/htmlForFeature';
 import { setLayerIsLoadingData } from 'store/appSlice';
 import simplify from '@turf/simplify';
+import { FillStyleExtension } from '@deck.gl/extensions';
+
+const patterns = ['dots', 'hatch-1x', 'hatch-2x', 'hatch-cross'];
 
 export const BOUNDARIES_LAYER_ID = 'boundariesLayer';
 
@@ -16,9 +19,12 @@ export default function BoundariesLayer() {
   const source = useSelector((state) => selectSourceById(state, boundariesLayer?.source));
   const viewState = useSelector((state) => state.carto.viewState);
   const cartoLayerProps = useCartoLayerProps({ source, uniqueIdProperty: 'cartodb_id' });
+  const { fetch, ...myCartoLayerProps } = cartoLayerProps; // Don't use the fetch function provided by the hook
   const dispatch = useDispatch();
 
   let layer;
+  let scale = Math.pow(2, Math.floor(15 - viewState.zoom));;
+  scale = Math.min(1024, Math.max(2, scale));
 
   const calculateLabelLocations = (features) => {
     const viewport = new WebMercatorViewport(viewState);
@@ -43,12 +49,12 @@ export default function BoundariesLayer() {
 
       // Calculate length in pixels
       const startVertexPixels = viewport.project([
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0],  
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1]  
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0],
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1],
       ]);
       const endVertexPixels = viewport.project([
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0],  
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1]  
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0],
+        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1],
       ]);
       const dxPixels = endVertexPixels[0] - startVertexPixels[0];
       const dyPixels = endVertexPixels[1] - startVertexPixels[1];
@@ -97,13 +103,35 @@ export default function BoundariesLayer() {
 
   if (boundariesLayer && source) {
     layer = new PolygonLabelLayer({
-      ...cartoLayerProps,
+      ...myCartoLayerProps,
       data: dataPromise,
       dataTransform: (res) => res.data,
       id: BOUNDARIES_LAYER_ID,
 
-      getFillColor: [241, 109, 122],
-      getLineColor: [255, 0, 0],
+      getFillColor: (f) => {
+        switch (f.properties.provider_short_name) {
+          case 'REIS':
+            return [255, 0, 0];
+          case 'OMB':
+            return [200, 200, 200];
+          case 'CBRE':
+            return [0, 255, 0];
+          default:
+            return [255, 0, 0];
+        }
+      },
+      getLineColor: (f) => {
+        switch (f.properties.provider_short_name) {
+          case 'REIS':
+            return [255, 0, 0];
+          case 'OMB':
+            return [200, 200, 200];
+          case 'CBRE':
+            return [0, 255, 0];
+          default:
+            return [255, 0, 0];
+        }
+      },
       lineWidthMinPixels: 1,
 
       pickable: true,
@@ -116,6 +144,26 @@ export default function BoundariesLayer() {
         }
       },
       onDataLoad: dataLoaded,
+
+      fillPatternMask: true,
+      fillPatternAtlas:
+        'https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.png',
+      fillPatternMapping:
+        'https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.json',
+      getFillPattern: (f) => {
+        if (f.properties.provider_short_name == 'OMB') {
+          return patterns[1];
+        }
+      },
+      getFillPatternScale: () => scale,
+      getFillPatternOffset: [0, 0],
+
+      extensions: [new FillStyleExtension({ pattern: true })],
+
+      updateTriggers: {
+        getFillPatternScale: [scale],
+        ...cartoLayerProps.updateTriggers,
+      },
     });
 
     return layer;
