@@ -109,15 +109,16 @@ export default function BoundariesLayer() {
       id: BOUNDARIES_LAYER_ID,
 
       getFillColor: (f) => {
+        const alpha = 255 - viewState.zoom * 10;
         switch (f.properties.provider_short_name) {
           case 'REIS':
-            return [255, 0, 0];
+            return [255, 0, 0, alpha];
           case 'OMB':
-            return [200, 200, 200];
+            return [200, 200, 200, alpha];
           case 'CBRE':
-            return [0, 255, 0];
+            return [0, 255, 0, alpha];
           default:
-            return [255, 0, 0];
+            return [255, 0, 0, alpha];
         }
       },
       getLineColor: (f) => {
@@ -161,6 +162,7 @@ export default function BoundariesLayer() {
       extensions: [new FillStyleExtension({ pattern: true })],
 
       updateTriggers: {
+        getFillColor: [viewState.zoom],
         getFillPatternScale: [scale],
         ...cartoLayerProps.updateTriggers,
       },
