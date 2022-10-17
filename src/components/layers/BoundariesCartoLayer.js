@@ -56,7 +56,10 @@ export default function BoundariesCartoLayer() {
 
   const viewportLoaded = (data) => {
     dispatch(setLayerIsLoadingData(false));
-    let renderedFeatures = layer.getSubLayers()[0].getSubLayers()[0].getRenderedFeatures();
+    let renderedFeatures = layer
+      .getSubLayers()[0]
+      .getSubLayers()[0]
+      .getRenderedFeatures();
     calculateLabelLocations(renderedFeatures);
   };
 
