@@ -66,10 +66,9 @@ export default function BoundariesLayer() {
       // [x] Multiple labels for the same polygon if the edge is long enough (in pixels)
       // [x] Clip the polygon against the viewport before calculating labels
       // [x] Update labels on view state change
-      // [ ] Label collision (tag map)
-      // [ ] Multiple labels in the same edge when the edge is longer than some amount
-      // [ ] Calculate the amount of labels for a given edge taking into account
-      //   the space occupied by each label
+      // [x] Avoid label collision (tag map)
+      // [x] Multiple labels in the same edge when the edge is longer than some amount
+      // [ ] Implement the same algorithm for CartoLayer
 
       // Loop through the edges and add a label to all the edges
       // with length > 100 px (or the longest edge if there is no edge with more than 100 px)
@@ -84,18 +83,40 @@ export default function BoundariesLayer() {
         const lengthPixels = Math.sqrt(Math.pow(dxPixels, 2) + Math.pow(dyPixels, 2));
 
         if (positions.length === 0 || lengthPixels > 100) {
-          // Label in the midpoint
-          const sumX = edge.x1 + edge.x2;
-          const sumY = edge.y1 + edge.y2;
-          const midPoint = [sumX / 2, sumY / 2];
-          positions.push(midPoint);
+          let numberLabels = 1;
+          if (lengthPixels > 400) {
+            // Add one label every 200 pixels
+            numberLabels = Math.floor(lengthPixels / 200);
+          }
+
+          // Label in the midpoint of each segment
+          // const sumX = edge.x1 + edge.x2;
+          // const sumY = edge.y1 + edge.y2;
+          // const midPoint = [sumX / 2, sumY / 2];
+          // positions.push(midPoint);
 
           // Angle of inclination (X axis)
           const dx = edge.x1 - edge.x2;
           const dy = edge.y1 - edge.y2;
-          // const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
           const angle = (Math.atan(dy / dx) * 180) / Math.PI;
-          angles.push(angle);
+
+          // Parametric equation
+          // Given two points (x1, y1) and (x2, y2), the parametric
+          // equation for the line that passes through the points is:
+          // x = x1 - x1 * t + x2 * t
+          // y = y1 - y1 * t + y2 * t
+          // If we have two labels, we will position them at t=0.33 and t=0.66
+          // If we have three labels, we will position them at t=0.25, t=0.50 and t=0.75
+          const incT = 1 / (numberLabels + 1);
+          let t = incT;
+          let x, y;
+          for (let i = 0; i < numberLabels; i++) {
+            x = edge.x1 - edge.x1 * t + edge.x2 * t;
+            y = edge.y1 - edge.y1 * t + edge.y2 * t;
+            positions.push([x, y]);
+            angles.push(angle);
+            t += incT;
+          }
         } else {
           break;
         }
