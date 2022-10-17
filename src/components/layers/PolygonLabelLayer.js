@@ -1,4 +1,4 @@
-import { CompositeLayer, GeoJsonLayer, TextLayer } from 'deck.gl';
+import { CompositeLayer, GeoJsonLayer } from 'deck.gl';
 import TagmapLayer from './tagmap/tagmap-layer';
 
 export default class PolygonLabelLayer extends CompositeLayer {

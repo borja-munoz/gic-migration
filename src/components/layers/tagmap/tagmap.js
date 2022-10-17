@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import {scaleLog} from 'd3-scale';
+import { scaleLog } from 'd3-scale';
 import Tag from './tag';
 import RBush from 'rbush';
 import ClusterTree from 'hdbscanjs';
@@ -17,24 +17,27 @@ export default class TagMap {
     this.distFunc = distFunc;
   }
 
-  buildHierarchy(data, {
-    getLabel = val => val.label,
-    getPosition = val => val.position,
-    // getWeight = val => val.weight,
-    getAngle = val => val.angle
-  }) {
+  buildHierarchy(
+    data,
+    {
+      getLabel = (val) => val.label,
+      getPosition = (val) => val.position,
+      // getWeight = val => val.weight,
+      getAngle = (val) => val.angle,
+    }
+  ) {
     // clear tree
     this.tagTree = {};
-    const {tagTree, distFunc} = this;
+    const { tagTree, distFunc } = this;
 
     // group tags based on the content
-    data.forEach(val => {
+    data.forEach((val) => {
       const label = getLabel(val);
       if (!tagTree.hasOwnProperty(label)) {
         tagTree[label] = [];
       }
       // tagTree[label].push({data: getPosition(val), opt: getWeight(val)});
-      tagTree[label].push({data: getPosition(val), opt: getAngle(val)});
+      tagTree[label].push({ data: getPosition(val), opt: getAngle(val) });
     });
     for (const key in tagTree) {
       const cluster = new ClusterTree(tagTree[key], distFunc);
@@ -43,19 +46,19 @@ export default class TagMap {
   }
 
   extractCluster({
-    project = val => val,
+    project = (val) => val,
     bbox = null,
     weightThreshold = 0,
-    maxDist = DEFAULT_MAX_DIST
+    maxDist = DEFAULT_MAX_DIST,
   }) {
     // clear tagList
     this.tagList = [];
-    const {tagTree, tagList} = this;
+    const { tagTree, tagList } = this;
     const maxDistSq = maxDist * maxDist;
 
     for (const key in tagTree) {
       const tree = tagTree[key];
-      const flagCluster = tree.filter(val => {
+      const flagCluster = tree.filter((val) => {
         // a cluster of a single point
         if (val.isLeaf) {
           return true;
@@ -69,7 +72,7 @@ export default class TagMap {
       }, bbox);
 
       // generate tags which passed the test and weightThreshold
-      flagCluster.forEach(val => {
+      flagCluster.forEach((val) => {
         const tag = new Tag(key);
         val.data.forEach((p, i) => tag.add(p, val.opt[i]));
 
@@ -84,12 +87,13 @@ export default class TagMap {
 
   _getScale(minWeight, maxWeight, minFontSize, maxFontSize) {
     if (minWeight === maxWeight) {
-      return x => minFontSize;
+      return (x) => minFontSize;
     }
     // set log scale for label size
-    return scaleLog().base(Math.E)
-                      .domain([minWeight, maxWeight])
-                      .range([minFontSize, maxFontSize]);
+    return scaleLog()
+      .base(Math.E)
+      .domain([minWeight, maxWeight])
+      .range([minFontSize, maxFontSize]);
   }
 
   // center is two element array
@@ -144,7 +148,7 @@ export default class TagMap {
     maxFontSize,
     sizeMeasurer,
     isForce = false,
-    maxNumOfTags = DEFAULT_MAX_NUMBER_OF_TAGS
+    maxNumOfTags = DEFAULT_MAX_NUMBER_OF_TAGS,
   }) {
     if (!tagList || tagList.length === 0) {
       return [];
@@ -157,9 +161,9 @@ export default class TagMap {
     const sizeScale = this._getScale(minWeight, maxWeight, minFontSize, maxFontSize);
 
     // calculate bounding box
-    orderedTags.forEach(x => {
+    orderedTags.forEach((x) => {
       const fontSize = sizeScale(x.weight);
-      const {width, height} = sizeMeasurer(x.label, fontSize);
+      const { width, height } = sizeMeasurer(x.label, fontSize);
       x.setSize(width, height);
     });
 

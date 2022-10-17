@@ -16,7 +16,7 @@ export default class Tag {
   // loc: screen coords [x, y]
   // add(loc, weight, angle) {
   add(loc, angle) {
-    const {coords, center} = this;
+    const { coords, center } = this;
     coords.push(loc);
 
     const len = coords.length;
@@ -40,11 +40,15 @@ export default class Tag {
   }
 
   dist(loc) {
-    return Math.sqrt(Math.pow((this.center[0] - loc[0]), 2) + Math.pow((this.center[1] - loc[1]), 2));
+    return Math.sqrt(
+      Math.pow(this.center[0] - loc[0], 2) + Math.pow(this.center[1] - loc[1], 2)
+    );
   }
 
   overlap(tag) {
-    return Math.abs(tag.center[0] - this.center[0]) <= (tag.width + this.width) * 0.5 &&
-            Math.abs(tag.center[1] - this.center[1]) <= (tag.height + this.height) * 0.5;
+    return (
+      Math.abs(tag.center[0] - this.center[0]) <= (tag.width + this.width) * 0.5 &&
+      Math.abs(tag.center[1] - this.center[1]) <= (tag.height + this.height) * 0.5
+    );
   }
 }

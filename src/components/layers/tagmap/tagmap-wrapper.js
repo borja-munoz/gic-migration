@@ -1,6 +1,5 @@
 /* create a tagmap instance, set colorscheme, sizeMeasurer */
 /* eslint-disable max-len */
-/* global document */
 import TagMap from './tagmap.js';
 import RBush from 'rbush';
 import { lngLatToWorld, worldToLngLat } from '@math.gl/web-mercator';
