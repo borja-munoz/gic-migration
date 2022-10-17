@@ -1,4 +1,5 @@
 import { CompositeLayer, GeoJsonLayer, TextLayer } from 'deck.gl';
+import TagmapLayer from './tagmap/tagmap-layer';
 
 export default class PolygonLabelLayer extends CompositeLayer {
   renderLayers() {
@@ -21,7 +22,7 @@ export default class PolygonLabelLayer extends CompositeLayer {
           getFillPatternOffset: this.props.getFillPatternOffset,
 
           extensions: this.props.extensions,
-    
+
           updateTriggers: {
             getFillColor: this.props.updateTriggers.getFillColor,
             getLineColor: this.props.updateTriggers.getLineColor,
@@ -30,7 +31,8 @@ export default class PolygonLabelLayer extends CompositeLayer {
       ),
 
       // Labels
-      new TextLayer(
+      // new TextLayer(
+      new TagmapLayer(
         this.getSubLayerProps({
           id: 'text',
           data: this.props.dataLabels,
@@ -41,7 +43,7 @@ export default class PolygonLabelLayer extends CompositeLayer {
           fontFamily: this.props.fontFamily,
           fontWeight: this.props.fontWeight,
 
-          getPosition: this.props.getTextPosition,
+          //getPosition: this.props.getTextPosition,
           getText: this.props.getText,
           getSize: this.props.getTextSize,
           getColor: this.props.getTextColor,
@@ -55,7 +57,7 @@ export default class PolygonLabelLayer extends CompositeLayer {
             getAngle: this.props.updateTriggers.getTextAngle,
           },
 
-          extensions: []
+          extensions: [],
         })
       ),
     ];
@@ -70,7 +72,7 @@ PolygonLabelLayer.defaultProps = {
   fontWeight: 'normal',
   // Text accessors
   getText: { type: 'accessor', value: (x) => x.text },
-  getTextPosition: { type: 'accessor', value: (x) => x.textPosition },
+  //getTextPosition: { type: 'accessor', value: (x) => x.textPosition },
   getTextSize: { type: 'accessor', value: 12 },
   getTextColor: { type: 'accessor', value: [0, 0, 0, 255] },
   getTextAngle: { type: 'accessor', value: (x) => x.angle },

@@ -40,26 +40,27 @@ export default function BoundariesLayer() {
       const simplifiedFeature = simplify(originalFeature, { tolerance: 0.01 });
       const clippedFeature = bboxClip(simplifiedFeature, viewport.getBounds());
       let edges = [];
-      for (let i = 0; i < clippedFeature.geometry.coordinates[0].length - 1; i++) {
-        const x1 = clippedFeature.geometry.coordinates[0][i][0];
-        const y1 = clippedFeature.geometry.coordinates[0][i][1];
-        const x2 = clippedFeature.geometry.coordinates[0][i + 1][0];
-        const y2 = clippedFeature.geometry.coordinates[0][i + 1][1];
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-        edges.push({
-          x1,
-          y1,
-          x2,
-          y2,
-          length,
-        });
+      if (clippedFeature.geometry.coordinates.length >= 1) {
+        for (let i = 0; i < clippedFeature.geometry.coordinates[0].length - 1; i++) {
+          const x1 = clippedFeature.geometry.coordinates[0][i][0];
+          const y1 = clippedFeature.geometry.coordinates[0][i][1];
+          const x2 = clippedFeature.geometry.coordinates[0][i + 1][0];
+          const y2 = clippedFeature.geometry.coordinates[0][i + 1][1];
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+          edges.push({
+            x1,
+            y1,
+            x2,
+            y2,
+            length,
+          });
+        }
       }
 
       // Sorts the edges by length in descending order
       edges.sort((a, b) => b.length - a.length);
-
 
       // ToDo:
       // [x] Multiple labels for the same polygon if the edge is long enough (in pixels)
@@ -82,7 +83,7 @@ export default function BoundariesLayer() {
         const dyPixels = endVertexPixels[1] - startVertexPixels[1];
         const lengthPixels = Math.sqrt(Math.pow(dxPixels, 2) + Math.pow(dyPixels, 2));
 
-        if (positions.length == 0 || lengthPixels > 100) {
+        if (positions.length === 0 || lengthPixels > 100) {
           // Label in the midpoint
           const sumX = edge.x1 + edge.x2;
           const sumY = edge.y1 + edge.y2;
@@ -102,10 +103,13 @@ export default function BoundariesLayer() {
       // Assign the same label to all the features
       for (let i = 0; i < positions.length; i++) {
         layerDataLabels.push({
-          text: originalFeature.properties['provider_short_name'],
-          textPosition: positions[i],
-          angle: angles[i]    
-        })
+          // text: originalFeature.properties['provider_short_name'],
+          // textPosition: positions[i],
+          label: originalFeature.properties['provider_short_name'],
+          position: positions[i],
+          weight: 1,
+          angle: angles[i],
+        });
       }
     });
 
@@ -188,7 +192,7 @@ export default function BoundariesLayer() {
       fillPatternMapping:
         'https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.json',
       getFillPattern: (f) => {
-        if (f.properties.provider_short_name == 'OMB') {
+        if (f.properties.provider_short_name === 'OMB') {
           return patterns[1];
         }
       },
