@@ -1,80 +1,79 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PolygonLabelCartoLayer from './PolygonLabelCartoLayer.js';
 import { selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import htmlForFeature from 'utils/htmlForFeature';
 import { setLayerIsLoadingData } from 'store/appSlice';
+import { FillStyleExtension } from '@deck.gl/extensions';
+import LabelLocations from './labelLocations.js';
+
+const patterns = ['dots', 'hatch-1x', 'hatch-2x', 'hatch-cross'];
 
 export const BOUNDARIES_CARTO_LAYER_ID = 'boundariesCartoLayer';
 
 export default function BoundariesCartoLayer() {
   const { boundariesCartoLayer } = useSelector((state) => state.carto.layers);
+  const viewState = useSelector((state) => state.carto.viewState);
   const source = useSelector((state) =>
     selectSourceById(state, boundariesCartoLayer?.source)
   );
   const cartoLayerProps = useCartoLayerProps({ source, uniqueIdProperty: 'cartodb_id' });
+  const { fetch, ...myCartoLayerProps } = cartoLayerProps; // Don't use the fetch function provided by the hook
   const dispatch = useDispatch();
+  const [layerFeatures, setLayerFeatures] = useState([]);
+  const [dataLabels, setDataLabels] = useState([]);
 
   let layer;
-
-  const calculateLabelLocations = (features) => {
-    features.forEach((feature) => {
-      let longestEdgeLength = 0;
-      let longestEdgeInitialCoordIndex = 0;
-      for (let i = 0; i < feature.geometry.coordinates[0].length - 1; i++) {
-        const dx =
-          feature.geometry.coordinates[0][i + 1][0] -
-          feature.geometry.coordinates[0][i][0];
-        const dy =
-          feature.geometry.coordinates[0][i + 1][1] -
-          feature.geometry.coordinates[0][i][1];
-        const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-        if (length > longestEdgeLength) {
-          longestEdgeLength = length;
-          longestEdgeInitialCoordIndex = i;
-        }
-      }
-      feature.properties['text'] = feature.properties['provider_short_name'];
-      const sumX =
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0] +
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0];
-      const sumY =
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1] +
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1];
-      const midPoint = [sumX / 2, sumY / 2];
-      feature.properties['textPosition'] = midPoint;
-      const dx =
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][0] -
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][0];
-      const dy =
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex + 1][1] -
-        feature.geometry.coordinates[0][longestEdgeInitialCoordIndex][1];
-      const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-      feature.properties['angle'] = angle;
-    });
-  };
+  let scale = Math.pow(2, Math.floor(15 - viewState.zoom));
+  scale = Math.min(1024, Math.max(2, scale));
 
   const viewportLoaded = (data) => {
     dispatch(setLayerIsLoadingData(false));
-    let renderedFeatures = layer
-      .getSubLayers()[0]
-      .getSubLayers()[0]
-      .getRenderedFeatures();
-    calculateLabelLocations(renderedFeatures);
+    setLayerFeatures(layer.getSubLayers()[0].getSubLayers()[0].getRenderedFeatures());
   };
 
   const tileLoaded = () => {
     dispatch(setLayerIsLoadingData(true));
   };
 
+  // Update label locations when the features are loaded or when the viewstate is updated
+  useEffect(() => {
+    setDataLabels(LabelLocations(layerFeatures, viewState));
+  }, [layerFeatures, viewState]);
+
   if (boundariesCartoLayer && source) {
     layer = new PolygonLabelCartoLayer({
-      ...cartoLayerProps,
+      ...myCartoLayerProps,
       sourceData: source.data,
+      dataLabels,
       id: BOUNDARIES_CARTO_LAYER_ID,
 
-      getFillColor: [241, 109, 122],
-      getLineColor: [255, 0, 0],
+      getFillColor: (f) => {
+        const alpha = 255 - viewState.zoom * 10;
+        switch (f.properties.provider_short_name) {
+          case 'REIS':
+            return [255, 0, 0, alpha];
+          case 'OMB':
+            return [200, 200, 200, alpha];
+          case 'CBRE':
+            return [0, 255, 0, alpha];
+          default:
+            return [255, 0, 0, alpha];
+        }
+      },
+      getLineColor: (f) => {
+        switch (f.properties.provider_short_name) {
+          case 'REIS':
+            return [255, 0, 0];
+          case 'OMB':
+            return [200, 200, 200];
+          case 'CBRE':
+            return [0, 255, 0];
+          default:
+            return [255, 0, 0];
+        }
+      },
       lineWidthMinPixels: 1,
 
       pickable: true,
@@ -88,6 +87,27 @@ export default function BoundariesCartoLayer() {
       },
       onViewportLoad: viewportLoaded,
       onTileLoad: tileLoaded,
+
+      fillPatternMask: true,
+      fillPatternAtlas:
+        'https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.png',
+      fillPatternMapping:
+        'https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.json',
+      getFillPattern: (f) => {
+        if (f.properties.provider_short_name === 'OMB') {
+          return patterns[1];
+        }
+      },
+      getFillPatternScale: () => scale,
+      getFillPatternOffset: [0, 0],
+
+      extensions: [new FillStyleExtension({ pattern: true })],
+
+      updateTriggers: {
+        getFillColor: [viewState.zoom],
+        getFillPatternScale: [scale],
+        ...cartoLayerProps.updateTriggers,
+      },
     });
 
     return layer;

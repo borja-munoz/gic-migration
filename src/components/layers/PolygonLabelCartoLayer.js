@@ -1,5 +1,6 @@
-import { CompositeLayer, TextLayer } from 'deck.gl';
+import { CompositeLayer } from 'deck.gl';
 import { CartoLayer } from '@deck.gl/carto';
+import TagmapLayer from './tagmap/tagmap-layer';
 
 export default class PolygonLabelCartoLayer extends CompositeLayer {
   renderLayers() {
@@ -28,16 +29,18 @@ export default class PolygonLabelCartoLayer extends CompositeLayer {
       ),
 
       // Labels
-      new TextLayer(
+      new TagmapLayer(
         this.getSubLayerProps({
           // `getSubLayerProps` will concat the parent layer id with this id
           id: 'text',
-          data: this.props.data.features,
+          data: this.props.dataLabels,
+
+          // We don't want to generate picking events on the label layer
+          pickable: false,
 
           fontFamily: this.props.fontFamily,
           fontWeight: this.props.fontWeight,
 
-          getPosition: this.props.getTextPosition,
           getText: this.props.getText,
           getSize: this.props.getTextSize,
           getColor: this.props.getTextColor,
@@ -50,6 +53,8 @@ export default class PolygonLabelCartoLayer extends CompositeLayer {
             getColor: this.props.updateTriggers.getTextColor,
             getAngle: this.props.updateTriggers.getTextAngle,
           },
+
+          extensions: [],
         })
       ),
     ];
@@ -63,9 +68,8 @@ PolygonLabelCartoLayer.defaultProps = {
   fontFamily: 'Monaco, monospace',
   fontWeight: 'normal',
   // Text accessors
-  getText: { type: 'accessor', value: (x) => x.properties.text },
-  getTextPosition: { type: 'accessor', value: (x) => x.properties.textPosition },
+  getText: { type: 'accessor', value: (x) => x.text },
   getTextSize: { type: 'accessor', value: 12 },
   getTextColor: { type: 'accessor', value: [0, 0, 0, 255] },
-  getTextAngle: { type: 'accessor', value: (x) => x.properties.angle },
+  getTextAngle: { type: 'accessor', value: (x) => x.angle },
 };
