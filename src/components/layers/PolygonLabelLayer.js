@@ -33,7 +33,10 @@ export default class PolygonLabelLayer extends CompositeLayer {
       new TextLayer(
         this.getSubLayerProps({
           id: 'text',
-          data: this.props.data.features,
+          data: this.props.dataLabels,
+
+          // We don't want to generate picking events on the label layer
+          pickable: false,
 
           fontFamily: this.props.fontFamily,
           fontWeight: this.props.fontWeight,
@@ -66,9 +69,9 @@ PolygonLabelLayer.defaultProps = {
   fontFamily: 'Monaco, monospace',
   fontWeight: 'normal',
   // Text accessors
-  getText: { type: 'accessor', value: (x) => x.properties.text },
-  getTextPosition: { type: 'accessor', value: (x) => x.properties.textPosition },
+  getText: { type: 'accessor', value: (x) => x.text },
+  getTextPosition: { type: 'accessor', value: (x) => x.textPosition },
   getTextSize: { type: 'accessor', value: 12 },
   getTextColor: { type: 'accessor', value: [0, 0, 0, 255] },
-  getTextAngle: { type: 'accessor', value: (x) => x.properties.angle },
+  getTextAngle: { type: 'accessor', value: (x) => x.angle },
 };
