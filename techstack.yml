@@ -1,11 +1,12 @@
 repo_name: borja-munoz/gic-migration
 report_id: d34230a4ac41f207febba2c5c694e673
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-10T11:44:35+00:00'
+timestamp: '2024-01-05T08:54:49+00:00'
 requested_by: borja-munoz
 provider: github
 branch: main
-detected_tools_count: 33
+detected_tools_count: 35
 tools:
 - name: JavaScript
   description: Lightweight, interpreted, object-oriented language with first-class
@@ -16,6 +17,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/borja-munoz/gic-migration
   detection_source: Repo Metadata
 - name: Material-UI
   description: Material UI is a library of React UI components that implements Google's
@@ -27,6 +29,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Front-End Frameworks
   image_url: https://img.stackshare.io/service/1904/default_44d81cb9fadbc3688b7e91a6d5217d0ea5358b57.png
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/package.json
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -40,7 +43,7 @@ tools:
   category: Libraries
   sub_category: Javascript UI Libraries
   image_url: https://img.stackshare.io/service/1020/OYIaJ1KK.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -54,7 +57,7 @@ tools:
   category: Libraries
   sub_category: JavaScript Framework Components
   image_url: https://img.stackshare.io/service/3350/8261421.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -67,7 +70,7 @@ tools:
   category: Libraries
   sub_category: State Management Library
   image_url: https://img.stackshare.io/service/4074/13142323.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -80,6 +83,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Code Review
   image_url: https://img.stackshare.io/service/3337/Q4L7Jncy.jpg
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/package.json
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -91,6 +95,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/borja-munoz/gic-migration
   detection_source: Repo Metadata
 - name: Prettier
   description: 'Prettier is an opinionated code formatter. '
@@ -102,7 +107,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Code Review
   image_url: https://img.stackshare.io/service/7035/default_66f265943abed56bcdbfca1c866a4261b1fbb063.jpg
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -114,6 +119,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/5848/44mC-kJ3.jpg
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: yarn.lock
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -125,6 +131,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/package.json
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -136,6 +143,7 @@ tools:
   category: Application Utilities
   sub_category: Mapping APIs
   image_url: https://img.stackshare.io/service/1640/cvosutVr_400x400.jpg
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/package.json
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -148,12 +156,14 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/borja-munoz/gic-migration
   detection_source: Repo Metadata
 - name: husky
   website_url: https://github.com/typicode/husky
   open_source: false
   hosted_saas: false
   image_url: https://img.stackshare.io/service/9527/5502029.jpeg
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/package.json
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -162,6 +172,7 @@ tools:
   open_source: false
   hosted_saas: false
   image_url: https://img.stackshare.io/service/10577/11071.jpeg
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/package.json
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -175,7 +186,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16271/default_f04d39fc656c2e32ee1b9d3875a3002459aa3b69.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-10-17 17:32:37.000000000 Z
@@ -189,7 +200,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16471/default_73c88a18b684e01cbdbf945631a40a44aff5a777.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -203,7 +214,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18760/default_b057657dca80f65f97b5bbe8ba405ffa92071739.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -217,7 +228,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17424/default_1cdcda15ebb7caed879f8340bc212b44c4ec9dac.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -232,7 +243,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16549/default_d522554c6a41cb28d922d6d3ad32ad4afa0e3bb5.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -246,7 +257,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16978/default_7a9e63a9526bf5da91e7a6f9f792b13e3543a875.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-10-17 15:42:46.000000000 Z
@@ -260,7 +271,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16179/default_77b54a203c743d16eddb6b6390cba17218454fa0.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -274,7 +285,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16603/default_5a21421012fa20e57fe0aeab31228f42e7118abc.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -288,7 +299,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15879/default_0b10af8ca19c215f781dc07442e75bdc831089d0.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -302,7 +313,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15896/default_6e6e1d6bb189c8bb26c6410618bd597979578f39.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -316,7 +327,35 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16209/default_dc80ff0a17bac19253430a4f0f586714841116db.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
+  detection_source: package.json
+  last_updated_by: Borja Muñoz
+  last_updated_on: 2022-08-30 08:51:15.000000000 Z
+- name: husky
+  description: Prevents bad commit or push
+  package_url: https://www.npmjs.com/husky
+  version: 7.0.4
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15831/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
+  detection_source: package.json
+  last_updated_by: Borja Muñoz
+  last_updated_on: 2022-08-30 08:51:15.000000000 Z
+- name: lint-staged
+  description: Lint files staged by git
+  package_url: https://www.npmjs.com/lint-staged
+  version: 11.2.6
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15868/default_e0a4fb1126d7400f419f0931cf1669947a5bc552.png
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -330,7 +369,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18073/image.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -344,7 +383,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16437/default_89ba91277e3434b03295bb11d22736632df1d04f.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -358,7 +397,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18317/default_f1e168ebe0f124084b9a0acbe78bc5cdba7b4575.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -372,7 +411,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15808/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -386,7 +425,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17829/default_2a0f136cfb588dd9053268b73a18a953e8d65590.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -400,7 +439,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15984/default_f49d4c116f8ea0155f4d92673b084378bba02760.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -414,7 +453,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16025/default_e25d1fbb04a118c79fb444294461417342bd03bf.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
@@ -428,7 +467,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15985/default_8b5680d4e916298d08363c291a0d6e34c07ceb15.png
-  detection_source_url: yarn.lock
+  detection_source_url: https://github.com/borja-munoz/gic-migration/blob/main/yarn.lock
   detection_source: package.json
   last_updated_by: Borja Muñoz
   last_updated_on: 2022-08-30 08:51:15.000000000 Z
