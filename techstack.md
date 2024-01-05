@@ -1,7 +1,8 @@
 <!--
---- Readme.md Snippet without images Start ---
+&lt;--- Readme.md Snippet without images Start ---&gt;
 ## Tech Stack
 borja-munoz/gic-migration is built on the following main stack:
+
 - [React](https://reactjs.org/) – Javascript UI Libraries
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
 - [Mapbox](https://www.mapbox.com/) – Mapping APIs
@@ -14,11 +15,13 @@ borja-munoz/gic-migration is built on the following main stack:
 - [Prettier](https://prettier.io/) – Code Review
 
 Full tech stack [here](/techstack.md)
---- Readme.md Snippet without images End ---
 
---- Readme.md Snippet with images Start ---
+&lt;--- Readme.md Snippet without images End ---&gt;
+
+&lt;--- Readme.md Snippet with images Start ---&gt;
 ## Tech Stack
 borja-munoz/gic-migration is built on the following main stack:
+
 - <img width='25' height='25' src='https://img.stackshare.io/service/1020/OYIaJ1KK.png' alt='React'/> [React](https://reactjs.org/) – Javascript UI Libraries
 - <img width='25' height='25' src='https://img.stackshare.io/service/1209/javascript.jpeg' alt='JavaScript'/> [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) – Languages
 - <img width='25' height='25' src='https://img.stackshare.io/service/1640/cvosutVr_400x400.jpg' alt='Mapbox'/> [Mapbox](https://www.mapbox.com/) – Mapping APIs
@@ -31,14 +34,15 @@ borja-munoz/gic-migration is built on the following main stack:
 - <img width='25' height='25' src='https://img.stackshare.io/service/7035/default_66f265943abed56bcdbfca1c866a4261b1fbb063.jpg' alt='Prettier'/> [Prettier](https://prettier.io/) – Code Review
 
 Full tech stack [here](/techstack.md)
---- Readme.md Snippet with images End ---
+
+&lt;--- Readme.md Snippet with images End ---&gt;
 -->
 <div align="center">
 
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [borja-munoz/gic-migration](https://github.com/borja-munoz/gic-migration)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|33<br/>Tools used|11/10/23 <br/>Report generated|
+|35<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -180,9 +184,9 @@ Full tech stack [here](/techstack.md)
 </table>
 
 
-## <img src='https://img.stackshare.io/group.svg' /> Open source packages (19)</h2>
+## <img src='https://img.stackshare.io/group.svg' /> Open source packages (21)</h2>
 
-## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (19)
+## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (21)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
@@ -197,6 +201,8 @@ Full tech stack [here](/techstack.md)
 |[eslint-config-prettier](https://www.npmjs.com/eslint-config-prettier)|v8.5.0|08/30/22|Borja Muñoz |MIT|N/A|
 |[eslint-plugin-prettier](https://www.npmjs.com/eslint-plugin-prettier)|v3.4.1|08/30/22|Borja Muñoz |MIT|N/A|
 |[history](https://www.npmjs.com/history)|v5.3.0|08/30/22|Borja Muñoz |MIT|N/A|
+|[husky](https://www.npmjs.com/husky)|v7.0.4|08/30/22|Borja Muñoz |MIT|N/A|
+|[lint-staged](https://www.npmjs.com/lint-staged)|v11.2.6|08/30/22|Borja Muñoz |MIT|N/A|
 |[mapbox-gl](https://www.npmjs.com/mapbox-gl)|v1.0.0|08/30/22|Borja Muñoz |ICU|N/A|
 |[react-app-polyfill](https://www.npmjs.com/react-app-polyfill)|v2.0.0|08/30/22|Borja Muñoz |MIT|N/A|
 |[react-app-rewired](https://www.npmjs.com/react-app-rewired)|v2.2.1|08/30/22|Borja Muñoz |MIT|N/A|
@@ -209,4 +215,4 @@ Full tech stack [here](/techstack.md)
 <br/>
 <div align='center'>
 
-Generated via [Stack File](https://github.com/apps/stack-file)
+Generated via [Stack File](https://github.com/marketplace/stack-file)
