@@ -2,7 +2,7 @@ repo_name: borja-munoz/gic-migration
 report_id: d34230a4ac41f207febba2c5c694e673
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-05T08:54:49+00:00'
+timestamp: '2024-02-29T18:35:11+00:00'
 requested_by: borja-munoz
 provider: github
 branch: main
@@ -98,7 +98,7 @@ tools:
   detection_source_url: https://github.com/borja-munoz/gic-migration
   detection_source: Repo Metadata
 - name: Prettier
-  description: 'Prettier is an opinionated code formatter. '
+  description: Prettier is an opinionated code formatter.
   website_url: https://prettier.io/
   version: 2.7.1
   license: MIT
